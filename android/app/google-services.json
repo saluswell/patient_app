@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "856794807639",
+    "project_id": "saluswell-app",
+    "storage_bucket": "saluswell-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856794807639:android:9c9e178e6e833c3f129212",
+        "android_client_info": {
+          "package_name": "com.example.dietationapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856794807639-soemt2tl4es2khgog8os4r3vn1cihnd9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt3DJRuweEaxQS4Xttxk_dyJByujaH00Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856794807639-soemt2tl4es2khgog8os4r3vn1cihnd9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856794807639:android:8be2b23b0cb58a2f129212",
+        "android_client_info": {
+          "package_name": "com.saluswellpatient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856794807639-soemt2tl4es2khgog8os4r3vn1cihnd9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt3DJRuweEaxQS4Xttxk_dyJByujaH00Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856794807639-soemt2tl4es2khgog8os4r3vn1cihnd9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
