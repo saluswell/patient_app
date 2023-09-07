@@ -284,7 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       SizedBox(
                                         height: 35,
                                       ),
-                                      Text("No Dictations found!",
+                                      Text("No Dietitians found!",
                                           style: TextStyle(
                                               // fontFamily: 'Gilroy',
                                               color: AppColors.blackcolor,

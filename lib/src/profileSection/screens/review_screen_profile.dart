@@ -3,18 +3,21 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../common/utils/appcolors.dart';
-import '../../../reviewsSection/models/review_model.dart';
-import '../../../reviewsSection/services/review_services.dart';
-import '../../widgets/reviewTileWidget.dart';
+import '../../../../common/utils/themes.dart';
+import '../../reviewsSection/models/review_model.dart';
+import '../../reviewsSection/services/review_services.dart';
+import '../widgets/reviewTileWidget.dart';
 
-class ReviewListTabScreen extends StatefulWidget {
-  const ReviewListTabScreen({Key? key}) : super(key: key);
+class ReviewListTabProfileScreen extends StatefulWidget {
+  const ReviewListTabProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<ReviewListTabScreen> createState() => _ReviewListTabScreenState();
+  State<ReviewListTabProfileScreen> createState() =>
+      _ReviewListTabProfileScreenState();
 }
 
-class _ReviewListTabScreenState extends State<ReviewListTabScreen> {
+class _ReviewListTabProfileScreenState
+    extends State<ReviewListTabProfileScreen> {
   ReviewServices reviewServices = ReviewServices();
 
   @override
@@ -22,6 +25,33 @@ class _ReviewListTabScreenState extends State<ReviewListTabScreen> {
     return Scaffold(
       body: Column(
         children: [
+          const SizedBox(
+            height: 45,
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: IconButton(
+                onPressed: () {
+                  Navigator.maybePop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: AppColors.appcolor,
+                )),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Text(
+                "My Reviews",
+                style: fontW5S12(context)!.copyWith(
+                    fontSize: 27,
+                    color: AppColors.blackcolor,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+          ),
           const SizedBox(
             height: 15,
           ),

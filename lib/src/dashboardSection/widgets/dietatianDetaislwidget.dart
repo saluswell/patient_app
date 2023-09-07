@@ -70,17 +70,32 @@ class PopularDietitiansWidget extends StatelessWidget {
                                     fontWeight: FontWeight.w500),
                               ),
                               const SizedBox(
-                                height: 6,
+                                height: 2,
                               ),
-                              Text(
-                                userModel
-                                    .professionalInformationModel!.qualfications
-                                    .toString(),
-                                style: fontW5S12(context)!.copyWith(
-                                    fontSize: 12,
-                                    color: AppColors.lightdarktextcolor,
-                                    fontWeight: FontWeight.w500),
+                              Container(
+                                width: 80,
+                                child: RichText(
+                                    textAlign: TextAlign.start,
+                                    text: TextSpan(
+                                      text: userModel
+                                          .professionalInformationModel!
+                                          .qualfications
+                                          .toString(),
+                                      style: fontW5S12(context)!.copyWith(
+                                          fontSize: 12,
+                                          color: AppColors.lightdarktextcolor,
+                                          fontWeight: FontWeight.w500),
+                                    )),
                               ),
+                              // Text(
+                              //   userModel
+                              //       .professionalInformationModel!.qualfications
+                              //       .toString(),
+                              //   style: fontW5S12(context)!.copyWith(
+                              //       fontSize: 12,
+                              //       color: AppColors.lightdarktextcolor,
+                              //       fontWeight: FontWeight.w500),
+                              // ),
                             ],
                           ),
                         ],

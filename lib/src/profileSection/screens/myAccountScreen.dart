@@ -4,6 +4,7 @@ import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:saluswell_patient_updated/common/utils/enums.dart';
+import 'package:saluswell_patient_updated/src/profileSection/screens/review_screen_profile.dart';
 import 'package:saluswell_patient_updated/src/recipesSection/screens/reccipes_list_screen.dart';
 import 'package:saluswell_patient_updated/src/subscriptionSection/services/subscription_services.dart';
 
@@ -24,7 +25,6 @@ import '../widgets/account_header_divider.dart';
 import '../widgets/profile_common_card_widget.dart';
 import 'editProfileScreen.dart';
 import 'myProfileTab/personal_about_tab.dart';
-import 'myProfileTab/reviewsTab.dart';
 
 class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen(
@@ -267,7 +267,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         suffixicon: Res.arrowforward,
                         ontap: () {
                           toNext(
-                              context: context, widget: ReviewListTabScreen());
+                              context: context,
+                              widget: ReviewListTabProfileScreen());
                           // pushNewScreen(context,
                           //     withNavBar: true, screen: NotificationsScreen());
                         },
