@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../common/utils/firebaseUtils.dart';
@@ -59,6 +58,9 @@ class UserServices {
       "planName": userModel.planName,
       "planStatus": userModel.planStatus,
       "planPrice": userModel.planPrice,
+      "subscriptionID": userModel.subscriptionID,
+      "customerID": userModel.customerID,
+      "currency": userModel.currency,
     }, SetOptions(merge: true));
   }
 }

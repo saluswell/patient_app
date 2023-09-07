@@ -20,24 +20,54 @@ class PersonalAboutTab extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: 15,
+                const SizedBox(
+                  height: 45,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                      onPressed: () {
+                        Navigator.maybePop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: AppColors.appcolor,
+                      )),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Text(
                       "Personal Details",
                       style: fontW5S12(context)!.copyWith(
-                          fontSize: 17,
+                          fontSize: 27,
                           color: AppColors.blackcolor,
                           fontWeight: FontWeight.w700),
                     ),
-                  ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
                 ),
                 SizedBox(
                   height: 15,
                 ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.start,
+                //   children: [
+                //     Text(
+                //       "Personal Details",
+                //       style: fontW5S12(context)!.copyWith(
+                //           fontSize: 17,
+                //           color: AppColors.blackcolor,
+                //           fontWeight: FontWeight.w700),
+                //     ),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: 15,
+                // ),
                 TextDetailsWidget(
                   staticText: "First Name",
                   dynamicText:

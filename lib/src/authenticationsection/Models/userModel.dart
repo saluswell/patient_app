@@ -17,23 +17,27 @@ String userModelToJson(UserModel data) =>
     json.encode(data.toJson(data.userId.toString()));
 
 class UserModel {
-  UserModel(
-      {this.userId,
-      this.userName,
-      this.emailAdress,
-      this.profilePicture,
-      this.isApprovedByAdmin,
-      this.userType,
-      this.dateCreated,
-      this.availableDays,
-      this.availabletimeSlots,
-      this.patientQuestionareModel,
-      this.personalInformationModel,
-      this.professionalInformationModel,
-      this.bankingInformationModel,
-      this.planName,
-      this.planPrice,
-      this.planStatus});
+  UserModel({
+    this.userId,
+    this.userName,
+    this.emailAdress,
+    this.profilePicture,
+    this.isApprovedByAdmin,
+    this.userType,
+    this.dateCreated,
+    this.availableDays,
+    this.availabletimeSlots,
+    this.patientQuestionareModel,
+    this.personalInformationModel,
+    this.professionalInformationModel,
+    this.bankingInformationModel,
+    this.planName,
+    this.planPrice,
+    this.planStatus,
+    this.subscriptionID,
+    this.customerID,
+    this.currency,
+  });
 
   String? userId;
   String? userName;
@@ -51,6 +55,9 @@ class UserModel {
   String? planName;
   String? planPrice;
   String? planStatus;
+  String? subscriptionID;
+  String? customerID;
+  String? currency;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         userId: json["userID"],
@@ -73,6 +80,9 @@ class UserModel {
         planName: json["planName"],
         planPrice: json["planPrice"],
         planStatus: json["planStatus"],
+        subscriptionID: json["subscriptionID"],
+        customerID: json["customerID"],
+        currency: json["currency"],
       );
 
   Map<String, dynamic> toJson(String docID) => {
@@ -93,5 +103,8 @@ class UserModel {
         "planName": planName,
         "planPrice": planPrice,
         "planStatus": planStatus,
+        "subscriptionID": subscriptionID,
+        "customerID": customerID,
+        "currency": currency,
       };
 }

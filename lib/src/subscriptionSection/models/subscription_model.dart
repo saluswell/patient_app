@@ -21,6 +21,9 @@ class SubscriptionModel {
     this.planStatus,
     this.isApprovedByAdmin,
     this.dateCreated,
+    this.subscriptionID,
+    this.customerID,
+    this.currency,
   });
 
   String? userId;
@@ -30,6 +33,9 @@ class SubscriptionModel {
   String? planStatus;
   bool? isApprovedByAdmin;
   Timestamp? dateCreated;
+  String? subscriptionID;
+  String? customerID;
+  String? currency;
 
   factory SubscriptionModel.fromJson(Map<String, dynamic> json) =>
       SubscriptionModel(
@@ -40,6 +46,9 @@ class SubscriptionModel {
         planStatus: json["planStatus"],
         isApprovedByAdmin: json["isApprovedByAdmin"],
         dateCreated: json["dateCreated"],
+        subscriptionID: json["subscriptionID"],
+        customerID: json["customerID"],
+        currency: json["currency"],
       );
 
   Map<String, dynamic> toJson(String docID) => {
@@ -50,5 +59,8 @@ class SubscriptionModel {
         "planStatus": planStatus,
         "isApprovedByAdmin": isApprovedByAdmin,
         "dateCreated": dateCreated,
+        "subscriptionID": subscriptionID,
+        "customerID": customerID,
+        "currency": currency,
       };
 }

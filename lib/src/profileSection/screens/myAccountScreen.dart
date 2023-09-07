@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:saluswell_patient_updated/common/utils/enums.dart';
 import 'package:saluswell_patient_updated/src/recipesSection/screens/reccipes_list_screen.dart';
-import 'package:saluswell_patient_updated/src/subscriptionSection/models/subscription_model.dart';
 import 'package:saluswell_patient_updated/src/subscriptionSection/services/subscription_services.dart';
 
 import '../../../common/helperFunctions/navigatorHelper.dart';
@@ -24,7 +23,8 @@ import '../terms_and_conditions.dart';
 import '../widgets/account_header_divider.dart';
 import '../widgets/profile_common_card_widget.dart';
 import 'editProfileScreen.dart';
-import 'myProfileScreen.dart';
+import 'myProfileTab/personal_about_tab.dart';
+import 'myProfileTab/reviewsTab.dart';
 
 class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen(
@@ -157,19 +157,39 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                                 fontWeight: FontWeight.w700,
                                                 fontFamily: 'Axiforma',
                                                 fontSize: 11)),
-                                        Text(
-                                            model.planName ==
-                                                    PlanName.FreePlan.name
-                                                ? "Free Plan"
-                                                : "Premium Plan",
-                                            style: TextStyle(
-                                                // fontFamily: 'Gilroy',
-                                                color: AppColors.darkAppColor
-                                                    .withOpacity(0.9),
-                                                // decoration: TextDecoration.underline,
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily: 'Axiforma',
-                                                fontSize: 11)),
+                                        if (model.planName == freePlan) ...[
+                                          Text("Free Plan",
+                                              style: TextStyle(
+                                                  // fontFamily: 'Gilroy',
+                                                  color: AppColors.darkAppColor
+                                                      .withOpacity(0.9),
+                                                  // decoration: TextDecoration.underline,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: 'Axiforma',
+                                                  fontSize: 11)),
+                                        ] else if (model.planName ==
+                                            basicPlan) ...[
+                                          Text("Basic Plan",
+                                              style: TextStyle(
+                                                  // fontFamily: 'Gilroy',
+                                                  color: AppColors.darkAppColor
+                                                      .withOpacity(0.9),
+                                                  // decoration: TextDecoration.underline,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: 'Axiforma',
+                                                  fontSize: 11)),
+                                        ] else if (model.planName ==
+                                            premiumPlan) ...[
+                                          Text("Premium Plan",
+                                              style: TextStyle(
+                                                  // fontFamily: 'Gilroy',
+                                                  color: AppColors.darkAppColor
+                                                      .withOpacity(0.9),
+                                                  // decoration: TextDecoration.underline,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: 'Axiforma',
+                                                  fontSize: 11)),
+                                        ],
                                       ],
                                     ),
                                   ],
@@ -219,13 +239,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       MyAccountCardWidgets(
                         height: 25,
                         width: 22,
-                        text: "My Profile",
+                        text: "Personal Details",
                         prefixicon: Res.user,
                         suffixicon: Res.arrowforward,
                         ontap: () {
                           toNext(
                               context: context,
-                              widget: MyProfileScreen(
+                              widget: PersonalAboutTab(
                                 userModel: model,
                               ));
                         },
@@ -236,6 +256,33 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       Divider(
                         color: AppColors.lightdarktextcolor.withOpacity(0.7),
                       ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      MyAccountCardWidgets(
+                        height: 23,
+                        width: 23,
+                        text: "Reviews",
+                        prefixicon: Res.starrating,
+                        suffixicon: Res.arrowforward,
+                        ontap: () {
+                          toNext(
+                              context: context, widget: ReviewListTabScreen());
+                          // pushNewScreen(context,
+                          //     withNavBar: true, screen: NotificationsScreen());
+                        },
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+
+                      Divider(
+                        color: AppColors.lightdarktextcolor.withOpacity(0.7),
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+
                       // const SizedBox(
                       //   height: 6,
                       // ),

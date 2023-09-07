@@ -44,6 +44,8 @@ class SubscriptionProvider extends ChangeNotifier {
     }
   }
 
+  ///-----------------------------subscription section-------------------------
+
   createSubscription({
     required String cardNumber,
     required int expMonth,
@@ -66,6 +68,30 @@ class SubscriptionProvider extends ChangeNotifier {
                 defaultPrice: defaultPrice,
                 planName: planName,
                 planePrice: planPrice)
+            .whenComplete(() {
+          makeLoadingFalse();
+        });
+
+        notifyListeners();
+      });
+    } on Exception catch (e) {
+      makeLoadingFalse();
+      showSnackBarMessage(
+        content: e.toString(),
+        context: navstate.currentState!.context,
+      );
+      // TODO
+    }
+  }
+
+  ///cancel subscription provider
+  cancelSubscriptionProvider(String subscriptionID) async {
+    try {
+      Future.delayed(const Duration(milliseconds: 10)).whenComplete(() async {
+        makeLoadingTrue();
+
+        await subscriptionService
+            .cancelSubscription(subscriptionID)
             .whenComplete(() {
           makeLoadingFalse();
         });

@@ -3,9 +3,13 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:saluswell_patient_updated/common/helperFunctions/getUserIDhelper.dart';
 import 'package:saluswell_patient_updated/src/authenticationsection/Models/userModel.dart';
 import 'package:saluswell_patient_updated/src/authenticationsection/services/userServices.dart';
+import 'package:saluswell_patient_updated/src/dashboardSection/providers/bottom_navbar_provider.dart';
+import 'package:saluswell_patient_updated/src/dashboardSection/screens/bottomNavScreen.dart';
+import 'package:saluswell_patient_updated/src/subscriptionSection/models/stripe_subscription_model.dart';
 import 'package:saluswell_patient_updated/src/subscriptionSection/models/subscription_model.dart';
 
 import '../../../common/helperFunctions/navigatorHelper.dart';
@@ -138,6 +142,43 @@ class SubscriptionService {
     }
   }
 
+  Future<Map<String, dynamic>> cancelSubscription(String subscriptionID) async {
+    final String url =
+        'https://api.stripe.com/v1/subscriptions/$subscriptionID';
+
+    var response = await client.delete(
+      Uri.parse(url),
+      headers: headers,
+      // body: {
+      //   'invoice_settings[default_payment_method]': paymentMethodId,
+      // },
+    );
+    if (response.statusCode == 200) {
+      dp(
+          msg: "subscription canceled response print",
+          arg: jsonDecode(response.body));
+      userServices.updateUserSubscriptionDetails(UserModel(
+          planName: freePlan,
+          planPrice: null,
+          planStatus: PlanStatus.InActive.name,
+          subscriptionID: null,
+          customerID: null,
+          currency: null));
+      showSnackBarMessage(
+          context: navstate.currentState!.context,
+          content: "Subscription Cancelled Successfully");
+      toRemoveAll(
+          context: navstate.currentState!.context, widget: BottomNavScreen());
+      Provider.of<BottomNavProvider>(navstate.currentState!.context,
+              listen: false)
+          .updateCurrentScreen(4);
+      return json.decode(response.body);
+    } else {
+      print(json.decode(response.body));
+      throw 'Failed to update Customer.';
+    }
+  }
+
   Future<Map<String, dynamic>> _createSubscriptions(String customerId,
       String defaultPrice, String planName, String planPrice) async {
     const String url = 'https://api.stripe.com/v1/subscriptions';
@@ -151,6 +192,11 @@ class SubscriptionService {
         await client.post(Uri.parse(url), headers: headers, body: body);
     if (response.statusCode == 200) {
       dp(msg: "subscription status", arg: json.decode(response.body));
+      StripeSubscriptionModel subscriptionModel =
+          StripeSubscriptionModel.fromJson(json.decode(response.body));
+      dp(
+          msg: "Stripe create subscription model print",
+          arg: subscriptionModel.toJson());
       showSnackBarMessage(
           context: navstate.currentState!.context,
           content: "Subscription Activated Successfully");
@@ -161,13 +207,23 @@ class SubscriptionService {
           planPrice: planPrice,
           planStatus: PlanStatus.Active.name,
           isApprovedByAdmin: false,
-          dateCreated: Timestamp.fromDate(DateTime.now())));
+          dateCreated: Timestamp.fromDate(DateTime.now()),
+          subscriptionID: subscriptionModel.id.toString(),
+          customerID: subscriptionModel.customer.toString(),
+          currency: subscriptionModel.currency.toString()));
 
       userServices.updateUserSubscriptionDetails(UserModel(
-        planName: planName,
-        planPrice: planPrice,
-        planStatus: PlanStatus.Active.name,
-      ));
+          planName: planName,
+          planPrice: planPrice,
+          planStatus: PlanStatus.Active.name,
+          subscriptionID: subscriptionModel.id.toString(),
+          customerID: subscriptionModel.customer.toString(),
+          currency: subscriptionModel.currency.toString()));
+      toRemoveAll(
+          context: navstate.currentState!.context, widget: BottomNavScreen());
+      Provider.of<BottomNavProvider>(navstate.currentState!.context,
+              listen: false)
+          .updateCurrentScreen(4);
 
       return json.decode(response.body);
     } else {
@@ -178,6 +234,23 @@ class SubscriptionService {
 
   Future<Map<String, dynamic>> getSubscriptionPlans() async {
     const String url = 'https://api.stripe.com/v1/products';
+
+    var response = await client.get(
+      Uri.parse(url),
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      print(response.body.toString());
+      return json.decode(response.body);
+    } else {
+      print(json.decode(response.body));
+      throw 'Failed to register as a subscriber.';
+    }
+  }
+
+  Future<Map<String, dynamic>> getActiveSubscription(
+      String subscriptionID) async {
+    String url = 'https://api.stripe.com/v1/subscriptions/${subscriptionID}';
 
     var response = await client.get(
       Uri.parse(url),
