@@ -30,7 +30,10 @@ class UserModel {
       this.patientQuestionareModel,
       this.personalInformationModel,
       this.professionalInformationModel,
-      this.bankingInformationModel});
+      this.bankingInformationModel,
+      this.planName,
+      this.planPrice,
+      this.planStatus});
 
   String? userId;
   String? userName;
@@ -45,6 +48,9 @@ class UserModel {
   PersonalInformationModel? personalInformationModel;
   ProfessionalInformationModel? professionalInformationModel;
   BankingInformationModel? bankingInformationModel;
+  String? planName;
+  String? planPrice;
+  String? planStatus;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         userId: json["userID"],
@@ -64,6 +70,9 @@ class UserModel {
             json["ProfessionalInformationModel"]),
         bankingInformationModel:
             BankingInformationModel.fromJson(json["BankingInformationModel"]),
+        planName: json["planName"],
+        planPrice: json["planPrice"],
+        planStatus: json["planStatus"],
       );
 
   Map<String, dynamic> toJson(String docID) => {
@@ -81,5 +90,8 @@ class UserModel {
         "ProfessionalInformationModel":
             professionalInformationModel!.toJson(docID),
         "BankingInformationModel": bankingInformationModel!.toJson(docID),
+        "planName": planName,
+        "planPrice": planPrice,
+        "planStatus": planStatus,
       };
 }

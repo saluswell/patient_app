@@ -12,14 +12,16 @@ class FirebaseUtils {
 
   static String dates = "dates";
 
-  static String feeplans="feeplans";
+  static String feeplans = "feeplans";
 
-  static String DietatiansFeesPlan="DietatiansFeesPlan";
+  static String DietatiansFeesPlan = "DietatiansFeesPlan";
 
-  static String medicalRecords="medicalRecords";
+  static String medicalRecords = "medicalRecords";
 
-  static String reviews="reviews";
+  static String reviews = "reviews";
 
-  static String healthtips="healthtips";
+  static String healthtips = "healthtips";
+  static String subscriptions = "subscriptions";
 
+  static String recipes="recipes";
 }

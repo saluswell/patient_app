@@ -1,14 +1,23 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import 'package:saluswell_patient_updated/common/helperFunctions/getUserIDhelper.dart';
+import 'package:saluswell_patient_updated/src/authenticationsection/Models/userModel.dart';
+import 'package:saluswell_patient_updated/src/authenticationsection/services/userServices.dart';
+import 'package:saluswell_patient_updated/src/subscriptionSection/models/subscription_model.dart';
 
 import '../../../common/helperFunctions/navigatorHelper.dart';
 import '../../../common/helperFunctions/showsnackbar.dart';
 import '../../../common/utils/api_endpoints.dart';
+import '../../../common/utils/enums.dart';
+import '../../../common/utils/firebaseUtils.dart';
 import '../models/subscription_products_model.dart';
 
 class SubscriptionService {
+  UserServices userServices = UserServices();
+
   String publishableKey =
       "pk_test_51InnRlIdxBCh70xgnPUTMKldbyysNjJNLe2uEhm9K11SnVDbfZMtyxafZXevuQV1TbWqlkulNwxN3KTfi4iCADcq00yJ1Hj6vG";
 
@@ -129,8 +138,8 @@ class SubscriptionService {
     }
   }
 
-  Future<Map<String, dynamic>> _createSubscriptions(
-      String customerId, String defaultPrice) async {
+  Future<Map<String, dynamic>> _createSubscriptions(String customerId,
+      String defaultPrice, String planName, String planPrice) async {
     const String url = 'https://api.stripe.com/v1/subscriptions';
 
     Map<String, dynamic> body = {
@@ -145,6 +154,21 @@ class SubscriptionService {
       showSnackBarMessage(
           context: navstate.currentState!.context,
           content: "Subscription Activated Successfully");
+
+      createSubscription(SubscriptionModel(
+          userId: getUserID(),
+          planName: planName,
+          planPrice: planPrice,
+          planStatus: PlanStatus.Active.name,
+          isApprovedByAdmin: false,
+          dateCreated: Timestamp.fromDate(DateTime.now())));
+
+      userServices.updateUserSubscriptionDetails(UserModel(
+        planName: planName,
+        planPrice: planPrice,
+        planStatus: PlanStatus.Active.name,
+      ));
+
       return json.decode(response.body);
     } else {
       print(json.decode(response.body));
@@ -174,14 +198,17 @@ class SubscriptionService {
     required int expYear,
     required String cvc,
     required String defaultPrice,
+    required String planName,
+    required String planePrice,
   }) async {
     _init();
     final customer = await _createCustomer("Sohaib");
-    final _paymentMethod = await createPaymentMethod(
+    await createPaymentMethod(
         number: cardNumber, expMonth: expMonth, expYear: expYear, cvc: cvc);
     await _attachPaymentMethod(paymentMethodId.toString(), customer['id']);
     await _updateCustomer(paymentMethodId.toString(), customer['id']);
-    await _createSubscriptions(customer['id'], defaultPrice);
+    await _createSubscriptions(
+        customer['id'], defaultPrice, planName, planePrice);
   }
 
   ///-------------------------------- Subscription   Products Section -------------------------------------------
@@ -205,5 +232,25 @@ class SubscriptionService {
       dp(msg: "Exception", arg: e.toString());
       // TODO
     }
+  }
+
+  ///----------------------- adding subscription detail on firstore database------------------
+
+  ///Create Subscription
+  Future createSubscription(SubscriptionModel subscriptionModel) async {
+    DocumentReference docRef = FirebaseFirestore.instance
+        .collection(FirebaseUtils.subscriptions)
+        .doc(subscriptionModel.userId);
+    return await docRef.set(subscriptionModel.toJson(docRef.id));
+  }
+
+  ///fetch one  Subscription
+
+  Stream<SubscriptionModel> fetchSubscription(String userID) {
+    return FirebaseFirestore.instance
+        .collection(FirebaseUtils.subscriptions)
+        .doc(userID)
+        .snapshots()
+        .map((userData) => SubscriptionModel.fromJson(userData.data()!));
   }
 }

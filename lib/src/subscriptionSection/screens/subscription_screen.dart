@@ -37,7 +37,13 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text("Subscription"),
+            title: Text(
+              "Subscription",
+              style: fontW5S12(context)!.copyWith(
+                  color: AppColors.whitecolor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16),
+            ),
           ),
           body: subscriptionProvider.subscriptionProductsModel == null
               ? Center(
@@ -50,6 +56,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     Expanded(
                       child: ListView.builder(
                           padding: EdgeInsets.only(top: 20, bottom: 30),
+                          physics: AlwaysScrollableScrollPhysics(),
                           itemCount: subscriptionProvider
                               .subscriptionProductsModel!.data!.length,
                           itemBuilder: (context, index) {
@@ -88,52 +95,58 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                           style: fontW5S12(context)!.copyWith(
                                               color: AppColors.whitecolor,
                                               fontWeight: FontWeight.w600,
-                                              fontSize: 15)),
+                                              fontSize: 14)),
                                       SizedBox(
                                         height: 20,
                                       ),
                                       Container(
                                         height: 140,
-                                        padding: EdgeInsets.only(left: 40),
-                                        child: GridView.builder(
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                              mainAxisExtent: 30,
-                                              crossAxisSpacing: 0.5,
-
-                                              mainAxisSpacing: 5,
-                                              crossAxisCount:
-                                                  1, // Number of columns in the grid
-                                            ),
+                                        child: ListView.builder(
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            // gridDelegate:
+                                            //     SliverGridDelegateWithFixedCrossAxisCount(
+                                            //   mainAxisExtent: 30,
+                                            //   crossAxisSpacing: 0.5,
+                                            //
+                                            //   mainAxisSpacing: 5,
+                                            //   crossAxisCount:
+                                            //       1, // Number of columns in the grid
+                                            // ),
                                             itemCount: data.features!.length,
                                             itemBuilder: (context, index) {
-                                              return Row(
-                                                children: [
-                                                  Container(
-                                                    height: 9,
-                                                    width: 9,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(13),
-                                                        color: AppColors
-                                                            .whitecolor),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Text(
-                                                      data.features![index].name
-                                                          .toString(),
-                                                      style: fontW5S12(context)!
-                                                          .copyWith(
-                                                              color: AppColors
-                                                                  .whitecolor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 14)),
-                                                ],
+                                              return Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 10, left: 40),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      height: 7,
+                                                      width: 7,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(13),
+                                                          color: AppColors
+                                                              .whitecolor),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text(
+                                                        data.features![index]
+                                                            .name
+                                                            .toString(),
+                                                        style: fontW5S12(context)!
+                                                            .copyWith(
+                                                                color: AppColors
+                                                                    .whitecolor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 12)),
+                                                  ],
+                                                ),
                                               );
                                             }),
                                       ),
@@ -152,6 +165,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                         height: 20,
                                       ),
                                       CommonButtonWidget(
+                                          buttonHeight: 50,
+                                          textfont: 13,
                                           text: "Subscribe",
                                           onTap: () {
                                             toNext(
@@ -161,6 +176,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                                       subscriptionProvider
                                                           .subscriptionProductsModel!
                                                           .data![index],
+                                                  planPrice:
+                                                      index == 0 ? "80" : "20",
                                                 ));
                                           }),
                                       SizedBox(

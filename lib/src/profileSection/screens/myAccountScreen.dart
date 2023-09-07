@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:saluswell_patient_updated/common/utils/enums.dart';
+import 'package:saluswell_patient_updated/src/recipesSection/screens/reccipes_list_screen.dart';
+import 'package:saluswell_patient_updated/src/subscriptionSection/models/subscription_model.dart';
+import 'package:saluswell_patient_updated/src/subscriptionSection/services/subscription_services.dart';
 
 import '../../../common/helperFunctions/navigatorHelper.dart';
 import '../../../common/utils/appcolors.dart';
@@ -36,7 +40,9 @@ class MyAccountScreen extends StatefulWidget {
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
   UserServices userServices = UserServices();
+  SubscriptionService subscriptionService = SubscriptionService();
 
+  @override
   //final user =FirebaseAuth.instance.currentUser;
 
   @override
@@ -125,7 +131,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                             fontFamily: 'Axiforma',
                                             fontSize: 13)),
                                     const SizedBox(
-                                      height: 6,
+                                      height: 4,
                                     ),
                                     Text(model.emailAdress ?? "",
                                         style: TextStyle(
@@ -136,6 +142,36 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                             fontWeight: FontWeight.w700,
                                             fontFamily: 'Axiforma',
                                             fontSize: 11)),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text("Subscription Status : ",
+                                            style: TextStyle(
+                                                // fontFamily: 'Gilroy',
+                                                color: AppColors
+                                                    .lightdarktextcolor
+                                                    .withOpacity(0.9),
+                                                // decoration: TextDecoration.underline,
+                                                fontWeight: FontWeight.w700,
+                                                fontFamily: 'Axiforma',
+                                                fontSize: 11)),
+                                        Text(
+                                            model.planName ==
+                                                    PlanName.FreePlan.name
+                                                ? "Free Plan"
+                                                : "Premium Plan",
+                                            style: TextStyle(
+                                                // fontFamily: 'Gilroy',
+                                                color: AppColors.darkAppColor
+                                                    .withOpacity(0.9),
+                                                // decoration: TextDecoration.underline,
+                                                fontWeight: FontWeight.w700,
+                                                fontFamily: 'Axiforma',
+                                                fontSize: 11)),
+                                      ],
+                                    ),
                                   ],
                                 )
                               ],
@@ -245,9 +281,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         height: 6,
                       ),
 
-                      const SizedBox(
-                        height: 6,
-                      ),
                       MyAccountCardWidgets(
                         height: 23,
                         width: 23,
@@ -257,6 +290,30 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         ontap: () {
                           toNext(
                               context: context, widget: SubscriptionScreen());
+                          // pushNewScreen(context,
+                          //     withNavBar: true, screen: NotificationsScreen());
+                        },
+                      ),
+
+                      const SizedBox(
+                        height: 6,
+                      ),
+
+                      Divider(
+                        color: AppColors.lightdarktextcolor.withOpacity(0.7),
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+
+                      MyAccountCardWidgets(
+                        height: 23,
+                        width: 23,
+                        text: "Recipes",
+                        prefixicon: Res.notificationsIconsvg,
+                        suffixicon: Res.arrowforward,
+                        ontap: () {
+                          toNext(context: context, widget: RecipesListScreen());
                           // pushNewScreen(context,
                           //     withNavBar: true, screen: NotificationsScreen());
                         },

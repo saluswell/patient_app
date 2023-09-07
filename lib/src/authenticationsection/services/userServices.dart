@@ -28,7 +28,6 @@ class UserServices {
         .map((userData) => UserModel.fromJson(userData.data()!));
   }
 
-
   ///Update user record with Image
 
   Future updateUserDetailswithImage(UserModel userModel) async {
@@ -49,6 +48,17 @@ class UserServices {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .set({
       "userName": userModel.userName,
+    }, SetOptions(merge: true));
+  }
+
+  Future updateUserSubscriptionDetails(UserModel userModel) async {
+    return await FirebaseFirestore.instance
+        .collection(FirebaseUtils.users)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set({
+      "planName": userModel.planName,
+      "planStatus": userModel.planStatus,
+      "planPrice": userModel.planPrice,
     }, SetOptions(merge: true));
   }
 }

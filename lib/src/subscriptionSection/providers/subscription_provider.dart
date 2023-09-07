@@ -44,12 +44,15 @@ class SubscriptionProvider extends ChangeNotifier {
     }
   }
 
-  createSubscription(
-      {required String cardNumber,
-      required int expMonth,
-      required int expYear,
-      required String cvc,
-      required String defaultPrice}) async {
+  createSubscription({
+    required String cardNumber,
+    required int expMonth,
+    required int expYear,
+    required String cvc,
+    required String defaultPrice,
+    required String planName,
+    required String planPrice,
+  }) async {
     try {
       Future.delayed(const Duration(milliseconds: 10)).whenComplete(() async {
         makeLoadingTrue();
@@ -60,7 +63,9 @@ class SubscriptionProvider extends ChangeNotifier {
                 expMonth: expMonth,
                 expYear: expYear,
                 cvc: cvc,
-                defaultPrice: defaultPrice)
+                defaultPrice: defaultPrice,
+                planName: planName,
+                planePrice: planPrice)
             .whenComplete(() {
           makeLoadingFalse();
         });

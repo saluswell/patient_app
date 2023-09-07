@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:saluswell_patient_updated/src/authenticationsection/providers/savUserDetailsProvider.dart';
+import 'package:saluswell_patient_updated/src/subscriptionSection/services/subscription_services.dart';
 
 import '../../../common/helperFunctions/commonMethods.dart';
 import '../../../common/helperFunctions/getUserIDhelper.dart';
@@ -14,6 +15,7 @@ import '../../../common/helperFunctions/navigatorHelper.dart';
 import '../../../common/helperFunctions/showsnackbar.dart';
 import '../../../common/helperFunctions/storage_services.dart';
 import '../../../common/utils/appcolors.dart';
+import '../../../common/utils/enums.dart';
 import '../../../common/utils/textutils.dart';
 import '../../dashboardSection/screens/bottomNavScreen.dart';
 import '../Models/bankingInformationModel.dart';
@@ -172,6 +174,9 @@ class AuthProvider extends ChangeNotifier {
             profilePicture: null,
             userName: userNameController.text,
             userType: "Patient",
+            planName: PlanName.FreePlan.name,
+            planPrice: null,
+            planStatus: PlanStatus.InActive.name,
             personalInformationModel: PersonalInformationModel(
                 title: titleController.text,
                 firstName: firstNameController.text,

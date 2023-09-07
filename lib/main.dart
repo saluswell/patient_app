@@ -25,6 +25,7 @@ import 'package:saluswell_patient_updated/src/medicalRecordSection/providers/med
 import 'package:saluswell_patient_updated/src/onboardingsection/screens/onboardingscreen_one.dart';
 import 'package:saluswell_patient_updated/src/onboardingsection/screens/onboardingscreen_three.dart';
 import 'package:saluswell_patient_updated/src/onboardingsection/screens/onboardingscreen_two.dart';
+import 'package:saluswell_patient_updated/src/recipesSection/providers/recipes_provider.dart';
 import 'package:saluswell_patient_updated/src/reviewsSection/providers/review_provider.dart';
 import 'package:saluswell_patient_updated/src/subscriptionSection/providers/subscription_provider.dart';
 
@@ -152,6 +153,7 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider(create: (context) => HealthZonProvider()),
           ChangeNotifierProvider(create: (context) => TimeSlotProvider()),
           ChangeNotifierProvider(create: (context) => SubscriptionProvider()),
+          ChangeNotifierProvider(create: (context) => RecipesProvider()),
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,

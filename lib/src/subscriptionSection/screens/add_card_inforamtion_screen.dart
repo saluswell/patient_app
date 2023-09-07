@@ -12,8 +12,10 @@ import '../../../common/utils/appcolors.dart';
 
 class AddCardInformation extends StatefulWidget {
   final ProductsDatum productsDatum;
+  final String planPrice;
 
-  const AddCardInformation({Key? key, required this.productsDatum})
+  const AddCardInformation(
+      {Key? key, required this.productsDatum, required this.planPrice})
       : super(key: key);
 
   @override
@@ -101,6 +103,8 @@ class _AddCardInformationState extends State<AddCardInformation> {
                         cvc: cardEditController.details.cvc.toString(),
                         defaultPrice:
                             widget.productsDatum.defaultPrice.toString(),
+                        planName: widget.productsDatum.name.toString(),
+                        planPrice: widget.planPrice,
                       );
                     } else {
                       showSnackBarMessage(
